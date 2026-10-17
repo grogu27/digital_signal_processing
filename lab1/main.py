@@ -3,48 +3,40 @@ import matplotlib.pyplot as plt
 
 A = 4
 phi = np.pi / 4
-k = 0.4
-omega = k * np.pi
+omega = 0.4 * np.pi
+
 T = 2 * np.pi / omega
-f_real = 1 / T
+f = 1 / T
 
-def func(t):
-    return A * np.cos(omega * t + 0.25 * phi)
+def func(t, phi):
+    return A * np.cos(omega * t + phi)
 
-array_t = np.linspace(0, T*3+1, 10000)
-x_t = []
-buf = 0
-for i in array_t:
-    buf = func(i)
-    x_t.append(buf)
-#x_t = func(array_t)
-array2_t = np.linspace(0, 1, 1000)
-x2_t = 1 * np.sin(2 * np.pi * 2 * array2_t +   0.25 * 0)   
-x3_t = 1/27 * np.sin(2 * np.pi * 27 * 2 * array2_t +   0.25 * 0)   
-xsum_t = x2_t + x3_t
+print("1. Параметры гармонического колебания")
+print(f"Амплитуда: {A}")
+print(f"Угловая частота: {omega:.4f} рад/с")
+print(f"Период: {T:.2f} с")
+print(f"Частота: {f:.2f} Гц")
+print(f"Начальная фаза: {phi:.4f} рад")
 
+delta_t = -phi / omega
+print(f"Временной сдвиг: {delta_t:.4f} с")
 
+t = np.linspace(0, 3 * T, 2000)
+x1 = func(t, phi)
+x0 = func(t, 0)
 
-
-print(f"Период: {T}, Частота: {f_real}, Амплитуда: {A}, Fhi: {phi}, Omega: {omega}\nМаксимум для cos это 2*pi*k. Максимум: 0.4pi*t+0.25phi = 2pi*k, tmax = -(0.25phi/0.4pi)")
-#print(x_t)
-
-plt.figure(figsize=(10,4))
-#plt.plot(array_t, x_t, color='red')
-plt.plot(array2_t, xsum_t, color='green')
-#plt.plot(array2_t, x3_t, color='black')
-
-#plt.title(r'$x(t) = 4\cos(0.4\pi t + 0.25\varphi)$')
-plt.title(f'x(t) = 4cos(0.4pi*t + 0.25phi)')
-plt.axhline(0, color='black', linewidth=0.5)
-#plt.axvline(0, color='black', linewidth=0.5, linestyle='--')
-#plt.axvline(T*3, color='black', linewidth=0.5, linestyle='--')
-
-
-plt.xlabel('t, с')
-plt.ylabel('x(t)')
+plt.figure(figsize=(10, 4))
+plt.plot(t, x1, label="Начальная фаза π/4")
+plt.plot(t, x0, "--", label="Начальная фаза 0")
+plt.title("Гармонические колебания")
+plt.xlabel("Время, с")
+plt.ylabel("x(t)")
+plt.axhline(0, color="black", linewidth=0.5)
 plt.grid(True, alpha=0.3)
-plt.savefig("signal.png", dpi=300, format='png')
+plt.legend()
+plt.tight_layout()
+plt.savefig("signal.png", dpi=300)
+plt.close()
 
 #plt.show()
 time_points = [-1, 3, 7]
@@ -64,11 +56,12 @@ print(f"Значение фазы колебания в моменты врем�
 
 
 #   3
+"""
 # z1 = a + jb и z2 = a − jb
 a1 = 5
-a2 = 3
-b1 = -1
-b2 = 1
+a2 = 5
+b1 = 1
+b2 = -1
 r1 = np.sqrt(a1**2 + b1**2)
 r2 = np.sqrt(a2**2 + b2**2)
 phi1 = np.arctan2(b1, a1)
@@ -84,3 +77,31 @@ print("z2 = 3.16*e^(i*0.32) -> в алгебраическую форму:\n3.16
 a3 = 3.16*np.cos(0.32)
 b3 = 3.16*np.sin(0.32)
 print(f"z2 = {a3:.0f} + i*{b3:.0f}")
+"""
+
+a1 = 5
+a2 = 5
+b1 = 1
+b2 = -1
+z1 = complex(a1, b1)
+z2 = complex(a2, b2)
+
+for name, z in [("z1", z1), ("z2", z2)]:
+    r = abs(z)
+    arg = np.angle(z)
+    print(f"{name} = {z.real:g} + i*{z.imag:g}")
+    print(
+    f"Тригонометрическая форма: "
+    f"{r:.4f}*(cos({arg:.4f}) "
+    f"+ j*sin({arg:.4f}))"
+    )
+    print(f"Показательная форма: {r:.4f}*e^(j*{arg:.4f})")
+
+
+# 4
+r = abs(z1)
+angle = np.arctan2(1, 3)
+real_part = r * np.cos(angle)
+im_part = r * np.sin(angle)
+print(f"z = {r:.4f}*e^(j*{angle:.4f})")
+print(f"z = {real_part:.4f} + i*{im_part:.4f}")

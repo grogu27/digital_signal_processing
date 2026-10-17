@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 A = 4
-phi = 0
+phi = np.pi / 4
 k = 0.4
 omega = k * np.pi
 T = 2 * np.pi / omega
@@ -22,6 +22,8 @@ array2_t = np.linspace(0, 1, 1000)
 x2_t = 1 * np.sin(2 * np.pi * 2 * array2_t +   0.25 * 0)   
 x3_t = 1/27 * np.sin(2 * np.pi * 27 * 2 * array2_t +   0.25 * 0)   
 xsum_t = x2_t + x3_t
+
+
 
 
 print(f"Период: {T}, Частота: {f_real}, Амплитуда: {A}, Fhi: {phi}, Omega: {omega}\nМаксимум для cos это 2*pi*k. Максимум: 0.4pi*t+0.25phi = 2pi*k, tmax = -(0.25phi/0.4pi)")
@@ -59,3 +61,26 @@ for t in time_points:
 phase_deg = [round(float(x), 2) for x in phase_deg]
 phase_rad = [round(float(x), 4) for x in phase_rad]
 print(f"Значение фазы колебания в моменты времени -1, 3, 7 сек: В градусах {phase_deg}, в радианах {phase_rad} ")
+
+
+#   3
+# z1 = a + jb и z2 = a − jb
+a1 = 5
+a2 = 3
+b1 = -1
+b2 = 1
+r1 = np.sqrt(a1**2 + b1**2)
+r2 = np.sqrt(a2**2 + b2**2)
+phi1 = np.arctan2(b1, a1)
+phi2= np.arctan2(b2, a2)
+print(f"Алгебраические формы комплексных числел: z1 = {a1} + j*{b1} и z2 = {a2} − j*{b2}")
+print(f"Тригонометрические формы комплексных числел: z1 = {r1:.2f}*(cos{phi1:.2f} + i*sin{phi1:.2f})\nz2 = {r2:.2f}*(cos{phi2:.2f} + i*sin{phi2:.2f})")
+print(f"Показательные формы комплексных числел: z1 = {r1:.2f}*e^(i*{phi1:.2f})\nz2 = {r2:.2f}*e^(i*{phi2:.2f})")
+
+# 4
+
+# z2 = 3.16*e^(i*0.32)
+print("z2 = 3.16*e^(i*0.32) -> в алгебраическую форму:\n3.16*(cos(0.32) + i*sin(0.32))")
+a3 = 3.16*np.cos(0.32)
+b3 = 3.16*np.sin(0.32)
+print(f"z2 = {a3:.0f} + i*{b3:.0f}")
